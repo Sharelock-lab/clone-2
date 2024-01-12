@@ -14,7 +14,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(final Model model) {
-        model.addAttribute("posts", postService.findAll());
+        model.addAttribute("posts", postService.findAllByOrderByCreatedDateDesc());
         return "index";
     }
 

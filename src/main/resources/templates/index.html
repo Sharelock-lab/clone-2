@@ -9,16 +9,18 @@
 </head>
 <body>
 
+<h5 class="text-center pt-3">Wszystkich postów: <small class="text-muted" th:text="${posts.size()}"></small></h5>
+
 <div class="card mt-3 border-color-gray" th:each="post : ${posts}">
   <div class="card-body">
-    <h5 class="card-title" th:text="${post.getUser().getName()}"></h5>
-    <h6 class="card-subtitle mb-2 text-muted" th:text="${post.getCreatedDate()}"></h6>
+    <h5 class="card-title" th:text="'@' + ${post.getUser().getName()}"></h5>
+    <h6 class="card-subtitle mb-2 text-muted" th:text="${post.getCreatedDateAsString()}"></h6>
     <p class="text-muted" th:text="${post.getText()}"></p>
     <div class="row">
-      <div class="col-3">Comments: <span th:text="${post.getComments().size()}"></span></div>
-      <div class="col-3">Hearts: <span th:text="${post.getHearts().size()}"></span></div>
-      <div class="col-3">Views: <span th:text="${post.getViews()}"></span></div>
-      <div class="col-3">Comments: <span th:text="${post.getBookmarks().size()}"></span></div>
+      <div class="col-3"><img class="post-stats" th:src="@{/img/comment.png}"> <span class="mr-3" th:text="${post.getComments().size()}"></span></div>
+      <div class="col-3"><img class="post-stats" th:src="@{/img/heart.png}"> <span class="mr-3" th:text="${post.getHearts().size()}"></span></div>
+      <div class="col-3"><img class="post-stats" th:src="@{/img/chart.png}"> <span class="mr-3" th:text="${post.getViews()}"></span></div>
+      <div class="col-3"><img class="post-stats" th:src="@{/img/bookmarks.png}"> <span class="mr-3" th:text="${post.getBookmarks().size()}"></span></div>
     </div>
   </div>
 </div>

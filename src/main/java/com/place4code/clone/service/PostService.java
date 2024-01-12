@@ -13,8 +13,8 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public List<Post> findAll() {
-        return postRepository.findAll();
+    public List<Post> findAllByOrderByCreatedDateDesc() {
+        return postRepository.findAllByOrderByCreatedDateDesc();
     }
 
 }
