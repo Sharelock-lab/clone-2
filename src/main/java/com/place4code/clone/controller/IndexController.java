@@ -1,6 +1,7 @@
 package com.place4code.clone.controller;
 
 import com.place4code.clone.service.PostService;
+import com.place4code.clone.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,12 @@ public class IndexController {
 
     private final PostService postService;
 
+    private final UserService userService;
+
     @GetMapping("/")
     public String index(final Model model) {
         model.addAttribute("posts", postService.findAllByOrderByCreatedDateDesc());
+        model.addAttribute("users", userService.findAll());
         return "index";
     }
 

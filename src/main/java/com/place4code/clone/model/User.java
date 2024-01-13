@@ -18,6 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 @EntityListeners(AuditingEntityListener.class)
@@ -58,5 +59,9 @@ public class User {
     joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    public String getCreatedDateAsString() {
+        return createdDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
 
 }
