@@ -10,12 +10,29 @@
 <body>
 <div class="container-fluid container-fluid-bg"></div>
 
+<ul class="nav-ul">
+  <li class="pt-3 mb-3">
+    <img height="70" width="70" th:src="@{/img/logo.png}">
+  </li>
+  <li class="p-3">
+    <a th:href="@{/}">
+      <img class="nav-img" th:src="@{/img/home.png}">
+    </a>
+  </li>
+</ul>
+
 <div class="container">
 
   <div class="row justify-content-end">
 
     <div class="col-7 content-container">
       <h1 class="mt-3 p-1"><small class="text-muted">Główna</small></h1>
+
+      <ul class="nav nav-tabs">
+        <li class="nav-item nav-tab-item">
+          <a class="nav-link active">Dla Ciebie</a>
+        </li>
+      </ul>
 
       <h5 class="text-center pt-3">Wszystkich postów: <small class="text-muted" th:text="${posts.size()}"></small></h5>
       <div class="card mt-3 border-color-gray" th:each="post : ${posts}">
