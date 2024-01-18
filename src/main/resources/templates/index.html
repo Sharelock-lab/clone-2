@@ -34,6 +34,18 @@
         </li>
       </ul>
 
+      <form th:object="${post}" th:action="@{/createPost}" method="post">
+        <div class="form-floating">
+          <textarea th:field="*{text}" class="form-control mt-3"
+                    id="post-textarea"
+                    style="height: 100px; border: none; background-color: #e9f5ff;"></textarea>
+          <label for="post-textarea">Co tam słychać?</label>
+          <div class="col-auto mt-3">
+            <button type="submit" class="btn btn-primary">Opublikuj</button>
+          </div>
+        </div>
+      </form>
+
       <h5 class="text-center pt-3">Wszystkich postów: <small class="text-muted" th:text="${posts.size()}"></small></h5>
       <div class="card mt-3 border-color-gray" th:each="post : ${posts}">
         <div class="card-body">
