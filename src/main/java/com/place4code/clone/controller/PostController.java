@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @AllArgsConstructor
 @Controller
@@ -20,7 +21,8 @@ public class PostController {
     @PostMapping("/createPost")
     public String createPost(@Valid Post post,
                              BindingResult bindingResult,
-                             Model model) {
+                             Model model,
+                             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("post", post);
@@ -29,6 +31,7 @@ public class PostController {
             return "index";
         } else {
             postService.saveNewPost(post);
+            redirectAttributes.addFlashAttribute("post_added", true);
             return "redirect:/";
         }
 

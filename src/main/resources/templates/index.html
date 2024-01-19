@@ -48,7 +48,8 @@
       </form>
 
       <h5 class="text-center pt-3">Wszystkich postów: <small class="text-muted" th:text="${posts.size()}"></small></h5>
-      <div class="card mt-3 border-color-gray" th:each="post : ${posts}">
+      <div class="card mt-3 border-color-gray" th:each="post, iterStat : ${posts}"
+      th:classappend="${iterStat.index == 0 && post_added != null} ? 'white-green-white-bg-transition' : ''">
         <div class="card-body">
           <h5 class="card-title" th:text="'@' + ${post.getUser().getName()}"></h5>
           <h6 class="card-subtitle mb-2 text-muted" th:text="${post.getCreatedDateAsString()}"></h6>
