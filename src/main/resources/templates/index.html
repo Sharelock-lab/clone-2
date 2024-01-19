@@ -37,9 +37,10 @@
       <form th:object="${post}" th:action="@{/createPost}" method="post">
         <div class="form-floating">
           <textarea th:field="*{text}" class="form-control mt-3"
-                    id="post-textarea"
-                    style="height: 100px; border: none; background-color: #e9f5ff;"></textarea>
-          <label for="post-textarea">Co tam słychać?</label>
+                    id="post-textarea" th:classappend="${#fields.hasErrors() ? 'is-invalid' : ''}"
+                    th:style="${#fields.hasErrors() ? 'height: 100px; border: none; background-color: #ffe5e5;' : 'height: 100px; border: none; background-color: #e9f5ff;'}"></textarea>
+          <small class="pl-1 pt-3 text-danger" th:errors="*{text}"></small>
+          <label for="post-textarea" th:classappend="${#fields.hasErrors() ? 'text-danger' : ''}">Co tam słychać?</label>
           <div class="col-auto mt-3">
             <button type="submit" class="btn btn-primary">Opublikuj</button>
           </div>
