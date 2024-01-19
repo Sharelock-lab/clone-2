@@ -14,14 +14,14 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public List<Post> findAllByOrderByCreatedDateDesc() {
         return postRepository.findAllByOrderByCreatedDateDesc();
     }
 
     public void saveNewPost(Post post) {
-        post.setUser(userRepository.findAll().stream().findFirst().get());
+        post.setUser(userService.findLoggedInUser());
         postRepository.save(post);
     }
 
