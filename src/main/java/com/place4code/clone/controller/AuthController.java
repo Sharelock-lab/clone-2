@@ -2,6 +2,7 @@ package com.place4code.clone.controller;
 
 import com.place4code.clone.model.User;
 import com.place4code.clone.service.UserService;
+import com.place4code.model.Message;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -52,6 +54,26 @@ public class AuthController {
         userService.activateUser(email, activationToken);
         redirectAttributes.addFlashAttribute("activated", true);
         return "redirect:/login";
+    }
+
+
+    @GetMapping("/resetPassword")
+    public String resetPasswordEmailForm() {
+        return "auth/reset_email_form";
+    }
+
+    @PostMapping("/resetPassword")
+    public String resetPasswordRequest(final RedirectAttributes redirectAttributes,
+                                       final @RequestParam("email") String email) {
+        if (userService.sendResetPasswordEMail(email)) {
+            redirectAttributes.addFlashAttribute(
+                    "message", new Message("Wysłaliśmy Ci wiadomość e-mail do resetu twojego hasła.", "success"));
+        } else {
+            redirectAttributes.addFlashAttribute(
+                    "message", new Message("Podany adres e-mail nie istnieje, albo nie aktywowałaś/eś jeszcze swojego konta.", "error"));
+        }
+        redirectAttributes.addFlashAttribute("response", true);
+        return "redirect:/resetPassword";
     }
 
 }

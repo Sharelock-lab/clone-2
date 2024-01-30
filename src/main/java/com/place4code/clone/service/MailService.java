@@ -53,4 +53,11 @@ public class MailService {
         }
     }
 
+    public void sendResetPasswordEMail(User user) {
+        try {
+            sendEmailFromTemplate(user, "email/reset", "Ustal nowe hasło");
+        } catch (final MessagingException e) {
+            throw new RuntimeException("Nie można wysłać wiadomości e-mail: " + e.getMessage());
+        }
+    }
 }

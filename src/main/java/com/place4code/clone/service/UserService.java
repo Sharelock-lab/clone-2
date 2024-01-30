@@ -69,4 +69,13 @@ public class UserService {
         user.setActivationToken(null);
         userRepository.save(user);
     }
+
+    public boolean sendResetPasswordEMail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    user.setResetPasswordToken(UUID.randomUUID().toString());
+                    mailService.sendResetPasswordEMail(user);
+                    return true;
+                }).orElse(false);
+    }
 }
