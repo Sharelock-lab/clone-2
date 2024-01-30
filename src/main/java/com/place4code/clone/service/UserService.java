@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -44,6 +45,7 @@ public class UserService {
                         .name(user.getName())
                         .country(user.getCountry())
                         .description(user.getDescription())
+                        .activationToken(UUID.randomUUID().toString())
                         .build()
         );
         mailService.sendActivationEmail(savedUser);
@@ -57,5 +59,14 @@ public class UserService {
         if (userRepository.existsByName(user.getName())) {
             bindingResult.addError(new FieldError("user", "name", "Taka nazwa już istnieje."));
         }
+    }
+
+    public void activateUser(String email, String activationToken) {
+        SecurityContextHolder.clearContext();
+        final User user = userRepository.findByEmailAndActivationToken(email, activationToken)
+                .orElseThrow(() -> new NotFoundException("Użytkownik nie istnieje, albo jest już aktywny."));
+        user.setEnabled(true);
+        user.setActivationToken(null);
+        userRepository.save(user);
     }
 }

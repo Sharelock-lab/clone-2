@@ -20,6 +20,21 @@
             <h2 class="text-center mb-4">
                 Zaloguj się
             </h2>
+
+            <div th:if="${activated}">
+                <div class="alert alert-success alert-dismissible fade show mt-3 border-none" role="alert">
+                    Konto zostało aktywowane! <br>
+                    Możesz się zalogować
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <div class="alert alert-danger alert-dismissible fade show mt-3 border-none" role="alert"
+                 th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']?.message} == 'User is disabled'">
+                Konto musi zostać aktywowane.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
             <form th:action="@{/login}" method="post">
                 <div class="form-floating mb-3">
                     <input type="text"

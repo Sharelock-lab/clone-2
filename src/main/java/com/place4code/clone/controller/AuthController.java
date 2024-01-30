@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,6 +43,15 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("success", true);
             return "redirect:/register";
         }
+    }
+
+    @GetMapping("/activate/{email}/{activationToken}")
+    public String activate(final @PathVariable String email,
+                           final @PathVariable String activationToken,
+                           final RedirectAttributes redirectAttributes) {
+        userService.activateUser(email, activationToken);
+        redirectAttributes.addFlashAttribute("activated", true);
+        return "redirect:/login";
     }
 
 }
