@@ -16,7 +16,14 @@
             <p class="text-center"><img height="48px" width="48px" src="/img/logo.png" th:src="@{/img/logo.png}"/></p>
             <h2 class="text-center mb-4">Nowe konto</h2>
 
-            <form th:object="${user}">
+            <div th:if="${success}">
+                <div class="alert alert-success alert-dismissible fade show mt-3 border-none" role="alert">
+                    Konto zostało utworzone!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <form th:object="${user}" method="post" th:action="@{/register}" th:if="!${success}">
                 <div class="form-floating mb-3">
                     <input type="text"
                            class="form-control auth-form-input-height"

@@ -1,14 +1,8 @@
 package com.place4code.clone.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,14 +32,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 6, max = 64, message = "E-Mail musi mieć od 6 do 64 znaków")
+    @Column(unique = true)
     private String email;
 
+    @NotBlank(message = "Nazwa konta jest wymagana")
+    @Size(max = 64)
+    @Column(unique = true)
     private String name;
 
+    @NotBlank(message = "Hasło jest wymagane")
     private String password;
 
+    @NotBlank(message = "Kraj jest wymagany")
     private String country;
 
+    @NotBlank(message = "Opis konta jest wymagany")
     private String description;
 
     private String activationToken;
