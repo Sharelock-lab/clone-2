@@ -48,7 +48,11 @@ public class SecurityConfig {
                         .requestMatchers(toH2Console()).permitAll()
                         .anyRequest().authenticated())
                 .headers(headersConfigurer -> headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-                .formLogin(withDefaults())
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .usernameParameter("email")
+                        .defaultSuccessUrl("/")
+                        .permitAll())
                 .logout(withDefaults())
                 .httpBasic(withDefaults()).build();
     }
