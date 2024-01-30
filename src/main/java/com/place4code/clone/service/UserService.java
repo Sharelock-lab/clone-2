@@ -22,6 +22,8 @@ public class UserService {
 
     private final RoleRepository roleRepository;
 
+    private final MailService mailService;
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -35,7 +37,7 @@ public class UserService {
     public User register(User user) {
         final User savedUser = userRepository.save(
                 User.builder()
-                        .enabled(true)
+                        .enabled(false)
                         .password(new BCryptPasswordEncoder().encode(user.getPassword()))
                         .roles(Collections.singleton(roleRepository.findByName("ROLE_USER").get()))
                         .email(user.getEmail())
@@ -44,6 +46,7 @@ public class UserService {
                         .description(user.getDescription())
                         .build()
         );
+        mailService.sendActivationEmail(savedUser);
         return savedUser;
     }
 

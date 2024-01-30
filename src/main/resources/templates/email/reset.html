@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ustal nowe hasło</title>
+</head>
+<body>
+<h1>Ustal nowe hasło</h1>
+<p th:text="|Witaj ${user.getEmail()}|"></p>
+<p>Aby ustalić swoje nowe hasło kliknij poniższy link:</p>
+<a th:href="${url} + '/resetPassword/' + ${user.getResetPasswordToken()}">Ustal nowe hasło</a>
+</body>
+</html>

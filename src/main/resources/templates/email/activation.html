@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Aktywuj swoje konto</title>
+</head>
+<body>
+<h1>Aktywuj swoje konto</h1>
+<p th:text="|Witaj na pokładzie ${user.getEmail()}|"></p>
+<p>Ostatnia prosta! Aktywuj swoje konto i do dzieła!</p>
+<a th:href="${url} + '/activate/' + ${user.getEmail()} + '/' + ${user.getActivationToken()}">Aktywuj swoje konto</a>
+</body>
+</html>
