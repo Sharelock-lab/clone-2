@@ -76,4 +76,28 @@ public class AuthController {
         return "redirect:/resetPassword";
     }
 
+    @GetMapping("resetPassword/{token}")
+    public String showNewPasswordForm(final @PathVariable String token,
+                                      final Model model) {
+        model.addAttribute("user", userService.findByResetPasswordTokenAndClearPassword(token));
+        return "auth/new_password_form";
+    }
+
+    @PostMapping("/setNewPassword")
+    public String setNewPassword(final @Valid User user,
+                                 final BindingResult bindingResult,
+                                 final Model model,
+                                 final RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return "auth/new_password_form";
+        } else {
+            userService.updatePassword(user);
+            redirectAttributes.addFlashAttribute("password_changed", true);
+            return "redirect:/login";
+        }
+    }
+
+
+
 }

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -35,7 +36,7 @@ public class UserService {
 
     }
 
-    public User register(User user) {
+    public User register(final User user) {
         final User savedUser = userRepository.save(
                 User.builder()
                         .enabled(false)
@@ -52,7 +53,7 @@ public class UserService {
         return savedUser;
     }
 
-    public void checkUniqueness(User user, BindingResult bindingResult) {
+    public void checkUniqueness(final User user, final BindingResult bindingResult) {
         if (userRepository.existsByEmail(user.getEmail())) {
             bindingResult.addError(new FieldError("user", "email", "Taki e-mail już istnieje."));
         }
@@ -61,7 +62,7 @@ public class UserService {
         }
     }
 
-    public void activateUser(String email, String activationToken) {
+    public void activateUser(final String email, final String activationToken) {
         SecurityContextHolder.clearContext();
         final User user = userRepository.findByEmailAndActivationToken(email, activationToken)
                 .orElseThrow(() -> new NotFoundException("Użytkownik nie istnieje, albo jest już aktywny."));
@@ -70,12 +71,26 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean sendResetPasswordEMail(String email) {
+    public boolean sendResetPasswordEMail(final String email) {
         return userRepository.findByEmail(email)
                 .map(user -> {
                     user.setResetPasswordToken(UUID.randomUUID().toString());
                     mailService.sendResetPasswordEMail(user);
+                    userRepository.save(user);
                     return true;
                 }).orElse(false);
     }
+
+    public User findByResetPasswordTokenAndClearPassword(final String token) {
+        final User user = userRepository.findByResetPasswordToken(token)
+                .orElseThrow(() -> new NotFoundException("Użytkownik nie istnieje."));
+        user.setPassword(null);
+        return user;
+    }
+
+    @Transactional
+    public void updatePassword(User user) {
+        userRepository.updatePassword(user.getEmail(), new BCryptPasswordEncoder().encode(user.getPassword()));
+    }
+
 }

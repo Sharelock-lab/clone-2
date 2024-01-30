@@ -29,6 +29,11 @@
                 </div>
             </div>
 
+            <div th:if="${password_changed}" class="alert alert-success alert-dismissible fade show mt-3 border-none" role="alert">
+                Hasło zostało zmienione.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
             <div class="alert alert-danger alert-dismissible fade show mt-3 border-none" role="alert"
                  th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']?.message} == 'User is disabled'">
                 Konto musi zostać aktywowane.
