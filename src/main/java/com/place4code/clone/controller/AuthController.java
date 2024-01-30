@@ -33,6 +33,7 @@ public class AuthController {
                     final BindingResult bindingResult,
                     final Model model,
                     final RedirectAttributes redirectAttributes) {
+        userService.checkUniqueness(user, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "auth/register";

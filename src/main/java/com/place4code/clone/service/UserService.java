@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,4 +47,12 @@ public class UserService {
         return savedUser;
     }
 
+    public void checkUniqueness(User user, BindingResult bindingResult) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            bindingResult.addError(new FieldError("user", "email", "Taki e-mail już istnieje."));
+        }
+        if (userRepository.existsByName(user.getName())) {
+            bindingResult.addError(new FieldError("user", "name", "Taka nazwa już istnieje."));
+        }
+    }
 }
