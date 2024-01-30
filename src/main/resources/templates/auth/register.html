@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Główna</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}">
+</head>
+<body>
+<div class="container-fluid container-fluid-bg"></div>
+
+<div class="container container-auth">
+    <div class="card auth-form-min-width">
+        <div class="card-body m-4">
+            <p class="text-center"><img height="48px" width="48px" src="/img/logo.png" th:src="@{/img/logo.png}"/></p>
+            <h2 class="text-center mb-4">Nowe konto</h2>
+
+            <form>
+                <div class="form-floating mb-3">
+                    <input type="text"
+                           class="form-control auth-form-input-height"
+                           id="nameInput">
+                    <label for="nameInput">Nazwa konta</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text"
+                           class="form-control auth-form-input-height"
+                           id="countryInput"
+                           th:field="*{country}"
+                           th:classappend="${#fields.hasErrors('country')} ? 'invalid-input' : ''"
+                           onchange="removeInvalidClass(this, 'countryErrorSpan')">
+                    <label for="countryInput">Kraj</label>
+                    <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="invalid-input-feedback" id="countryErrorSpan"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control mt-3 auth-form-textarea-height"
+                              id="descriptionTextAreaID"
+                              th:field="*{description}"
+                              th:classappend="${#fields.hasErrors('description')} ? 'invalid-input' : ''"
+                              onchange="removeInvalidClass(this, 'descriptionErrorSpan')"></textarea>
+                    <label for="descriptionTextAreaID">Opis konta</label>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-input-feedback" id="descriptionErrorSpan"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email"
+                           class="form-control auth-form-input-height"
+                           id="emailInput"
+                           th:field="*{email}"
+                           th:classappend="${#fields.hasErrors('email')} ? 'invalid-input' : ''"
+                           onchange="removeInvalidClass(this, 'emailErrorSpan')">
+                    <label for="emailInput">E-Mail</label>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-input-feedback" id="emailErrorSpan"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password"
+                           class="form-control auth-form-input-height"
+                           id="passwordInput"
+                           th:field="*{password}"
+                           th:classappend="${#fields.hasErrors('password')} ? 'invalid-input' : ''"
+                           onchange="removeInvalidClass(this, 'passwordErrorSpan')">
+                    <label for="passwordInput">Hasło</label>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-input-feedback" id="passwordErrorSpan"></span>
+                </div>
+                <div class="form-floating">
+                    <input type="password"
+                           class="form-control auth-form-input-height"
+                           id="confirmPasswordInput"
+                           th:field="*{confirmPassword}"
+                           th:classappend="${#fields.hasErrors('confirmPassword')} ? 'invalid-input' : ''"
+                           onchange="removeInvalidClass(this, 'confirmPasswordErrorSpan')">
+                    <label for="confirmPasswordInput">Potwierdź hasło</label>
+                    <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="invalid-input-feedback" id="confirmPasswordErrorSpan"></span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-3">Utwórz konto</button>
+            </form>
+        </div>
+        <div class="card-body text-center">
+            <a th:href="@{/login}" class="card-link">Zaloguj się</a>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="pt-4 text-center pb-4">
+                <a target="_blank" class="mt-4" href="https://icons8.com"><img width="32" height="32" th:src="@{/img/icons8.png}"/></a> Icons by <a target="_blank" href="https://icons8.com">Icons8</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
