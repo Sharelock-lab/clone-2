@@ -39,8 +39,13 @@ public class PostService {
     }
 
     public Post findPostByIdAndIncrementViews(final Long id) {
-        final Post post = postRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Taki post nie istnieje."));
+        final Post post = findPostById(id);
         return postRepository.save(post.incrementViews());
     }
+
+    public Post findPostById(final Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Taki post nie istnieje."));
+    }
+
 }
