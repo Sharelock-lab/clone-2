@@ -49,9 +49,15 @@
           </a>
           <div class="row">
             <div class="col-3"><img class="post-stats" th:src="@{/img/comment.png}"> <span class="mr-3" th:text="${post.getComments().size()}"></span></div>
-            <div class="col-3"><img class="post-stats" th:src="@{/img/heart.png}"> <span class="mr-3" th:text="${post.getHearts().size()}"></span></div>
+            <div class="col-3">
+              <img th:if="${!isLiked}" class="post-stats" th:src="@{/img/heart.png}">
+              <img th:if="${isLiked}" class="post-stats" th:src="@{/img/heart-red.png}">
+              <span class="mr-3" th:text="${post.getHearts().size()}"></span></div>
             <div class="col-3"><img class="post-stats" th:src="@{/img/chart.png}"> <span class="mr-3" th:text="${post.getViews()}"></span></div>
-            <div class="col-3"><img class="post-stats" th:src="@{/img/bookmarks.png}"> <span class="mr-3" th:text="${post.getBookmarks().size()}"></span></div>
+            <div class="col-3">
+              <img th:if="${!isMarked}" class="post-stats" th:src="@{/img/bookmarks.png}">
+              <img th:if="${isMarked}" class="post-stats" th:src="@{/img/bookmarks-filled.png}">
+              <span class="mr-3" th:text="${post.getBookmarks().size()}"></span></div>
           </div>
         </div>
       </div>

@@ -41,8 +41,10 @@ public class PostController {
 
     @GetMapping("/post/{id}")
     public String postView(final Model model, @PathVariable final Long id) {
-        final Post post = postService.findById(id);
+        final Post post = postService.findPostByIdAndIncrementViews(id);
         model.addAttribute("post", post);
+        model.addAttribute("isLiked", postService.isThePostLikedByTheUser(post));
+        model.addAttribute("isMarked", postService.isThePostMarkedByTheUser(post));
         model.addAttribute("users", userService.findAll());
         return "post";
     }

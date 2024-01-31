@@ -66,4 +66,9 @@ public class Post {
         return createdDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"));
     }
 
+    public Post incrementViews() {
+        views++;
+        return this;
+    }
+
 }
