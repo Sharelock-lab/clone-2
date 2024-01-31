@@ -72,6 +72,19 @@
         </div>
       </div>
 
+      <div class="row justify-content-end">
+        <div class="col-11">
+          <div class="card mt-3 border-left-gray" th:each="comment : ${comments}">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">
+                <span th:text="'@ ' + ${comment.getUser().getName()}"></span> <span class="blue">•</span> <span class="text-muted" th:text="${comment.getCreatedDateAsString()}"></span>
+              </h6>
+              <p class="card-text" th:text="${comment.getText()}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="col-4 content-container">

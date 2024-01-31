@@ -16,6 +16,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -43,5 +44,9 @@ public class Comment {
 
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
+
+    public String getCreatedDateAsString() {
+        return createdDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss"));
+    }
 
 }
