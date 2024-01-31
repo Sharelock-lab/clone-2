@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,6 +17,16 @@
   <li class="p-3">
     <a th:href="@{/}">
       <img class="nav-img" th:src="@{/img/home.png}">
+    </a>
+  </li>
+  <li class="p-3" sec:authorize="!isAuthenticated()">
+    <a th:href="@{/login}">
+      <img class="nav-img" th:src="@{/img/login.png}">
+    </a>
+  </li>
+  <li class="p-3" sec:authorize="isAuthenticated()">
+    <a th:href="@{/logout}">
+      <img class="nav-img" th:src="@{/img/logout.png}">
     </a>
   </li>
 </ul>
