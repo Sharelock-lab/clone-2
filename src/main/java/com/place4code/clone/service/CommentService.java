@@ -12,9 +12,17 @@ import java.util.List;
 @Service
 public class CommentService {
 
-    CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
+
+    private final UserService userService;
 
     public List<Comment> findAllByPostOrderByCreatedDateDesc(final Post post) {
         return commentRepository.findAllByPostOrderByCreatedDateDesc(post);
+    }
+
+    public void saveNewCommentForPost(final Comment comment, final Post post) {
+        comment.setPost(post);
+        comment.setUser(userService.findLoggedInUser());
+        commentRepository.save(comment);
     }
 }

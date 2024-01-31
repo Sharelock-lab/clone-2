@@ -1,5 +1,6 @@
 package com.place4code.clone.controller;
 
+import com.place4code.clone.model.Comment;
 import com.place4code.clone.model.Post;
 import com.place4code.clone.service.CommentService;
 import com.place4code.clone.service.PostService;
@@ -49,6 +50,7 @@ public class PostController {
         model.addAttribute("isMarked", postService.isThePostMarkedByTheUser(post));
         model.addAttribute("comments", commentService.findAllByPostOrderByCreatedDateDesc(post));
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("comment", new Comment());
         return "post";
     }
 
