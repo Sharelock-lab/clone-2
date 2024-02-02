@@ -1,5 +1,6 @@
 package com.place4code.clone.service;
 
+import com.place4code.clone.exception.NotFoundException;
 import com.place4code.clone.model.Comment;
 import com.place4code.clone.model.Post;
 import com.place4code.clone.repository.CommentRepository;
@@ -25,4 +26,11 @@ public class CommentService {
         comment.setUser(userService.findLoggedInUser());
         commentRepository.save(comment);
     }
+
+    public void deleteComment(final Long commentId) {
+        final Comment comment = commentRepository.findByIdAndUser(commentId, userService.findLoggedInUser())
+                .orElseThrow(() -> new NotFoundException("Taki komentarz nie istnieje."));
+        commentRepository.delete(comment);
+    }
+
 }
