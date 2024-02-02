@@ -42,6 +42,12 @@
 
       <div class="card mt-3 border-color-gray">
         <div class="card-body">
+          <form th:action="|@{/deletePost/}${post.getId()}|" method="post"
+                th:if="${post.getUser().getId() == #authentication.getPrincipal().getId()}" class="height-0 comment-trash-form">
+            <button type="submit" class="button-as-img">
+              <img class="nav-img" th:src="@{/img/trash.png}">
+            </button>
+          </form>
           <h5 class="card-title" th:text="'@' + ${post.getUser().getName()}"></h5>
           <h6 class="card-subtitle mb-2 text-muted" th:text="${post.getCreatedDateAsString()}"></h6>
           <a th:href="|@{/post/}${post.getId()}|" class="text-muted">

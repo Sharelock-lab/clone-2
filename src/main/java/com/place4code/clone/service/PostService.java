@@ -48,4 +48,9 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException("Taki post nie istnieje."));
     }
 
+    public void deletePost(final Long postId) {
+        final Post post = postRepository.findByIdAndUser(postId, userService.findLoggedInUser())
+                .orElseThrow(() -> new NotFoundException("Ten użytkownik nie ma takiego postu"));
+        postRepository.delete(post);
+    }
 }

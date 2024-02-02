@@ -54,4 +54,13 @@ public class PostController {
         return "post";
     }
 
+    @PostMapping("/deletePost/{postId}")
+    public String deleteComment(final Model model,
+                                final RedirectAttributes redirectAttributes,
+                                final @PathVariable("postId") Long postId) {
+        postService.deletePost(postId);
+        redirectAttributes.addFlashAttribute("post_deleted", true);
+        return "redirect:/";
+    }
+
 }

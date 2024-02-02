@@ -57,6 +57,13 @@
         </div>
       </form>
 
+      <div th:if="${post_deleted}">
+        <div class="alert alert-success alert-dismissible fade show mt-3 border-none" role="alert">
+          Post został usunięty!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+
       <h5 class="text-center pt-3">Wszystkich postów: <small class="text-muted" th:text="${posts.size()}"></small></h5>
       <div class="card mt-3 border-color-gray" th:each="post, iterStat : ${posts}"
       th:classappend="${iterStat.index == 0 && post_added != null} ? 'white-green-white-bg-transition' : ''">
