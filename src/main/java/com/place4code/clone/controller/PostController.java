@@ -63,4 +63,28 @@ public class PostController {
         return "redirect:/";
     }
 
+    @GetMapping("/post/edit/{id}")
+    public String postEditView(final Model model, @PathVariable final Long id) {
+        model.addAttribute("post", postService.findPostByIdAndLoggedInUser(id));
+        model.addAttribute("users", userService.findAll());
+        return "post-edit";
+    }
+
+    @PostMapping("/updatePost")
+    public String updatePost(@Valid Post post,
+                             final BindingResult bindingResult,
+                             final Model model,
+                             final RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("post", post);
+            model.addAttribute("users", userService.findAll());
+            return "post-edit";
+        } else {
+            postService.updatePost(post);
+            redirectAttributes.addFlashAttribute("post_updated", true);
+            return "redirect:/post/" + post.getId();
+        }
+
+    }
+
 }

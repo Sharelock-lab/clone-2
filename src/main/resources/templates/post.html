@@ -40,10 +40,22 @@
         <small class="text-muted cursor-pointer" onclick="goBack()">< </small><small class="text-muted">Post</small>
       </h1>
 
+      <div th:if="${post_updated}">
+        <div class="alert alert-success alert-dismissible fade show mt-3 border-none" role="alert">
+          Post został zaktualizowany!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+
       <div class="card mt-3 border-color-gray">
         <div class="card-body">
+          <form th:action="|@{/post/edit/}${post.getId()}|" method="get" th:if="${post.getUser().getId() == #authentication.getPrincipal().getId()}" class="height-0 post-edit-form">
+            <button type="submit" class="button-as-img">
+              <img class="nav-img" th:src="@{/img/edit.png}"/>
+            </button>
+          </form>
           <form th:action="|@{/deletePost/}${post.getId()}|" method="post"
-                th:if="${post.getUser().getId() == #authentication.getPrincipal().getId()}" class="height-0 comment-trash-form">
+                th:if="${post.getUser().getId() == #authentication.getPrincipal().getId()}" class="height-0 post-trash-form">
             <button type="submit" class="button-as-img">
               <img class="nav-img" th:src="@{/img/trash.png}">
             </button>

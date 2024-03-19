@@ -6,7 +6,9 @@ import com.place4code.clone.repository.BookmarkRepository;
 import com.place4code.clone.repository.HeartRepository;
 import com.place4code.clone.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -53,4 +55,17 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException("Ten użytkownik nie ma takiego postu"));
         postRepository.delete(post);
     }
+
+    public Post findPostByIdAndLoggedInUser(final Long postId) {
+        return postRepository.findByIdAndUser(postId, userService.findLoggedInUser())
+                .orElseThrow(() -> new NotFoundException("Ten użytkownik nie ma takiego postu"));
+    }
+
+    @Transactional
+    public void updatePost(final @NonNull Post post) {
+        final Post postFromDB = findPostByIdAndLoggedInUser(post.getId());
+        postFromDB.setText(post.getText());
+        postRepository.save(postFromDB);
+    }
+
 }
