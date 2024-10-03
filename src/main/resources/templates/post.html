@@ -24,6 +24,11 @@
     <img class="nav-img" th:src="@{/img/heart.png}"/>
   </a>
   </li>
+  <li class="p-3">
+    <a th:href="@{/bookmarks}">
+      <img class="nav-img" th:src="@{/img/bookmarks.png}"/>
+    </a>
+  </li>
   <li class="p-3" sec:authorize="!isAuthenticated()">
     <a th:href="@{/login}">
       <img class="nav-img" th:src="@{/img/login.png}">
