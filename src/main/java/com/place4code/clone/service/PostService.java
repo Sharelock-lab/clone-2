@@ -1,6 +1,7 @@
 package com.place4code.clone.service;
 
 import com.place4code.clone.exception.NotFoundException;
+import com.place4code.clone.model.Heart;
 import com.place4code.clone.model.Post;
 import com.place4code.clone.repository.BookmarkRepository;
 import com.place4code.clone.repository.HeartRepository;
@@ -68,4 +69,8 @@ public class PostService {
         postRepository.save(postFromDB);
     }
 
+    public List<Post> findAllByUserAndHearts() {
+        final List<Heart> hearts = heartRepository.findAllByUser(userService.findLoggedInUser());
+        return postRepository.findAllByHeartsInOrderByCreatedDateDesc(hearts);
+    }
 }
