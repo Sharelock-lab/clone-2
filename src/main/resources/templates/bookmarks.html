@@ -20,6 +20,11 @@
     </a>
   </li>
   <li class="p-3">
+    <a th:href="|@{/profile/}${#authentication.getPrincipal().getId()}|">
+      <img class="nav-img" th:src="@{/img/user.png}">
+    </a>
+  </li>
+  <li class="p-3">
     <a th:href="@{/hearts}">
       <img class="nav-img" th:src="@{/img/heart.png}"/>
     </a>
@@ -82,7 +87,9 @@
 
       <div class="card mt-3 border-color-gray" th:each="user: ${users}">
         <div class="card-body">
-          <h5 class="card-title" th:text="'@' + ${user.getName()}"></h5>
+          <a th:href="|@{/profile/}${user.getId()}|" class="text-muted">
+            <h5 class="card-title" th:text="'@' + ${user.getName()}"></h5>
+          </a>
           <h6 class="card-subtitle mb-2 text-muted" th:text="'jest z nami od ' + ${user.getCreatedDateAsString()}"></h6>
           <img class="post-stats" th:src="@{/img/location.png}"/> <span class="mr-3" th:text="${user.getCountry()}"></span>
         </div>

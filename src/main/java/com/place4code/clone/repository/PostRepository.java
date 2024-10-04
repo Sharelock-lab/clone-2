@@ -18,4 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByHeartsInOrderByCreatedDateDesc(List<Heart> hearts);
 
     List<Post> findAllByBookmarksInOrderByCreatedDateDesc(List<Bookmark> bookmarks);
+
+    List<Post> findAllByUserOrderByCreatedDateDesc(User user);
 }

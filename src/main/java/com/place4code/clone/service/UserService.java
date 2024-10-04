@@ -93,4 +93,7 @@ public class UserService {
         userRepository.updatePassword(user.getEmail(), new BCryptPasswordEncoder().encode(user.getPassword()));
     }
 
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Użytkownik nie istnieje."));
+    }
 }
