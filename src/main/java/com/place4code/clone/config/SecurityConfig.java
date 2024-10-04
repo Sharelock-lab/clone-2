@@ -25,7 +25,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
 
     public static final String[] PERMITTED_MATCHERS = {
-            "/", "/error", "/register/**", "/activate/**", "/img/**", "/style/**", "/js/**", "/resetPassword", "/resetPassword/**", "/setNewPassword"
+            "/error", "/register/**", "/activate/**", "/img/**", "/style/**", "/js/**", "/resetPassword", "/resetPassword/**", "/setNewPassword"
     };
 
     @Bean
