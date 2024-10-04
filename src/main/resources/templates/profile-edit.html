@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="'@' + ${user.getName()}"></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}">
+</head>
+<body>
+<div class="container-fluid container-fluid-bg"></div>
+
+<ul class="nav-ul">
+  <li class="pt-3 mb-3">
+    <img height="70" width="70" th:src="@{/img/logo.png}">
+  </li>
+  <li class="p-3">
+    <a th:href="@{/}">
+      <img class="nav-img" th:src="@{/img/home.png}">
+    </a>
+  </li>
+  <li class="p-3">
+    <a th:href="|@{/profile/}${#authentication.getPrincipal().getId()}|">
+      <img class="nav-img" th:src="@{/img/user.png}">
+    </a>
+  </li>
+  <li class="p-3">
+    <a th:href="@{/hearts}">
+      <img class="nav-img" th:src="@{/img/heart.png}"/>
+    </a>
+  </li>
+  <li class="p-3">
+    <a th:href="@{/bookmarks}">
+      <img class="nav-img" th:src="@{/img/bookmarks.png}"/>
+    </a>
+  </li>
+  <li class="p-3" sec:authorize="!isAuthenticated()">
+    <a th:href="@{/login}">
+      <img class="nav-img" th:src="@{/img/login.png}">
+    </a>
+  </li>
+  <li class="p-3" sec:authorize="isAuthenticated()">
+    <a th:href="@{/logout}">
+      <img class="nav-img" th:src="@{/img/logout.png}">
+    </a>
+  </li>
+</ul>
+
+<div class="container">
+
+  <div class="row justify-content-end">
+    <div class="col-7 content-container">
+
+      <h1 class="mt-3 p-1">
+        <small class="text-muted cursor-pointer" onclick="goBack()">< </small> <small class="text-muted">Edytuj swój profil</small>
+      </h1>
+
+      <div class="card mt-3 border-none">
+        <div class="card-body">
+          <form method="post" th:action="@{/updateProfile}" th:object="${user}">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-floating mb-3">
+              <input type="text"
+                     class="form-control auth-form-input-height profile-edit-input"
+                     id="nameInput"
+                     th:field="*{name}"
+                     th:classappend="${#fields.hasErrors('name')} ? 'invalid-input' : ''"
+                     onchange="removeInvalidClass(this, 'nameErrorSpan')">
+              <label for="nameInput">Nazwa konta</label>
+              <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-input-feedback" id="nameErrorSpan"></span>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text"
+                     class="form-control auth-form-input-height profile-edit-input"
+                     id="countryInput"
+                     th:field="*{country}"
+                     th:classappend="${#fields.hasErrors('country')} ? 'invalid-input' : ''"
+                     onchange="removeInvalidClass(this, 'countryErrorSpan')">
+              <label for="countryInput">Kraj</label>
+              <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="invalid-input-feedback" id="countryErrorSpan"></span>
+            </div>
+            <div class="form-floating mb-3">
+                    <textarea class="form-control mt-3 profile-edit-form-textarea"
+                              id="descriptionTextAreaID"
+                              th:field="*{description}"
+                              th:classappend="${#fields.hasErrors('description')} ? 'invalid-input' : ''"
+                              onchange="removeInvalidClass(this, 'descriptionErrorSpan')">
+                    </textarea>
+              <label for="descriptionTextAreaID">Opis konta</label>
+              <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-input-feedback" id="descriptionErrorSpan"></span>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="email"
+                     class="form-control auth-form-input-height profile-edit-input"
+                     id="emailInput"
+                     th:field="*{email}"
+                     th:classappend="${#fields.hasErrors('email')} ? 'invalid-input' : ''"
+                     onchange="removeInvalidClass(this, 'emailErrorSpan')">
+              <label for="emailInput">E-Mail</label>
+              <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-input-feedback" id="emailErrorSpan"></span>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password"
+                     class="form-control auth-form-input-height profile-edit-input"
+                     id="passwordInput"
+                     th:field="*{password}"
+                     th:classappend="${#fields.hasErrors('password')} ? 'invalid-input' : ''"
+                     onchange="removeInvalidClass(this, 'passwordErrorSpan')">
+              <label for="passwordInput">Hasło</label>
+              <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-input-feedback" id="passwordErrorSpan"></span>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Zapisz</button>
+            <a class="btn btn-secondary mt-3" th:href="|@{/profile/}${user.getId()}|">Anuluj</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4 content-container">
+      <h1 class="display-6 mt-4 p-1 font-size-1-75rem">Popularne osoby</h1>
+
+      <div class="card mt-3 border-color-gray" th:each="user: ${users}">
+        <div class="card-body">
+          <a th:href="|@{/profile/}${user.getId()}|" class="text-muted">
+            <h5 class="card-title" th:text="'@' + ${user.getName()}"></h5>
+          </a>
+          <h6 class="card-subtitle mb-2 text-muted" th:text="'jest z nami od ' + ${user.getCreatedDateAsString()}"></h6>
+          <img class="post-stats" th:src="@{/img/location.png}"/> <span class="mr-3" th:text="${user.getCountry()}"></span>
+        </div>
+      </div>
+
+      <!-- Opcjonalne dla uzytku icons8 -->
+      <div class="row justify-content-center mt-4">
+        <div class="pt-4 pb-4 text-center border-top">
+          <a target="_blank" class="mt-4" href="https://icons8.com">
+            <img width="32" height="32" th:src="@{/img/icons8.png}"/></a> Icons by <a target="_blank" href="https://icons8.com">Icons8</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

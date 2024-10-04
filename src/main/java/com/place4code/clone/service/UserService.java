@@ -25,6 +25,7 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     private final MailService mailService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -96,4 +97,29 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Użytkownik nie istnieje."));
     }
+
+    public void checkUniquenessByEdit(final User user, final BindingResult bindingResult) {
+        final User loggedInUser = findLoggedInUser();
+        if (!loggedInUser.getEmail().equals(user.getEmail()) && userRepository.existsByEmail(user.getEmail())) {
+            bindingResult.addError(new FieldError("user", "email", "Taki e-mail już istnieje."));
+        }
+        if (!loggedInUser.getName().equals(user.getName()) && userRepository.existsByName(user.getName())) {
+            bindingResult.addError(new FieldError("user", "name", "Taka nazwa już istnieje."));
+        }
+    }
+
+    @Transactional
+    public User updateUser(final User user) {
+        final String password = new BCryptPasswordEncoder().encode(user.getPassword());
+        final User userFromDB = findById(user.getId());
+        userFromDB.setName(user.getName());
+        userFromDB.setCountry(user.getCountry());
+        userFromDB.setEmail(user.getEmail());
+        userFromDB.setDescription(user.getDescription());
+        userFromDB.setPassword(password);
+        userRepository.save(userFromDB);
+        customUserDetailsService.updateUserContext(userFromDB.getEmail());
+        return userFromDB;
+    }
+
 }

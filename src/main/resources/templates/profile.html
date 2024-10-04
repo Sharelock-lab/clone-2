@@ -56,6 +56,13 @@
         <span th:text="'@' + ${user.getName()}"></span>
       </h1>
 
+      <div th:if="${user_updated}">
+        <div class="alert alert-success alert-dismissible fade show mt-3 border-none" role="alert">
+          Twój profil został zaktualizowany!
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+
       <div class="card mt-3 border-none">
         <div class="card-body border-bottom">
           <div class="row">
@@ -74,6 +81,11 @@
                 <div class="col-6 mt-2">
                   <img class="nav-img post-stats" th:src="@{/img/list.png}"/> <span class="mr-3" th:text="'Postów: ' + ${posts.size()}"></span>
                 </div>
+                <form th:action="|@{/profile/edit/}${user.getId()}|" method="get" th:if="${user.getId() == #authentication.getPrincipal().getId()}" class="user-edit-form">
+                  <button type="submit" class="button-as-img">
+                    <img class="nav-img" th:src="@{/img/edit.png}"/>
+                  </button>
+                </form>
               </div>
             </div>
           </div>
