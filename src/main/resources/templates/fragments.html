@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:fragment="nav">
+    <ul class="nav-ul">
+        <li class="pt-3 mb-3">
+            <img height="70" width="70" th:src="@{/img/logo.png}">
+        </li>
+        <li class="p-3">
+            <a th:href="@{/}">
+                <img class="nav-img" th:src="@{/img/home.png}">
+            </a>
+        </li>
+        <li class="p-3">
+            <a th:href="|@{/profile/}${#authentication.getPrincipal().getId()}|">
+                <img class="nav-img" th:src="@{/img/user.png}">
+            </a>
+        </li>
+        <li class="p-3">
+            <a th:href="@{/hearts}">
+                <img class="nav-img" th:src="@{/img/heart.png}"/>
+            </a>
+        </li>
+        <li class="p-3">
+            <a th:href="@{/bookmarks}">
+                <img class="nav-img" th:src="@{/img/bookmarks.png}"/>
+            </a>
+        </li>
+        <li class="p-3" sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}">
+                <img class="nav-img" th:src="@{/img/login.png}">
+            </a>
+        </li>
+        <li class="p-3" sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}">
+                <img class="nav-img" th:src="@{/img/logout.png}">
+            </a>
+        </li>
+    </ul>
+</div>
+
+</html>
