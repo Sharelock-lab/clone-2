@@ -1,0 +1,40 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Podaj liczbę elementów do posortowania: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        int[] numbers = new int[n];
+        Console.WriteLine("Podaj liczby:");
+
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Element {i + 1}: ");
+            numbers[i] = Convert.ToInt32(Console.ReadLine());
+        }
+
+        for (int i = 0; i < numbers.Length - 1; i++)
+        {
+            for (int j = 0; j < numbers.Length - i - 1; j++)
+            {
+                if (numbers[j] > numbers[j + 1])
+                {
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+                }
+            }
+        }
+
+        Console.WriteLine("\nPosortowane liczby:");
+        foreach (var num in numbers)
+        {
+            Console.WriteLine(num);
+        }
+
+        Console.WriteLine("Koniec programu.");
+    }
+}
