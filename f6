@@ -1,0 +1,25 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Program przyjmuje liczby całkowite. Podaj liczbę mniejszą od zera, aby zakończyć program.");
+
+        while (true)
+        {
+            Console.Write("Podaj liczbę: ");
+            int number = Convert.ToInt32(Console.ReadLine());
+
+            if (number < 0)
+            {
+                Console.WriteLine("Wprowadzono liczbę mniejszą od zera. Koniec programu");
+                break;
+            }
+
+            Console.WriteLine($"Wprowadzona liczba: {number}");
+        }
+
+        Console.WriteLine("Koniec programu.");
+    }
+}
