@@ -1,0 +1,95 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        while (true)
+        {
+            Console.WriteLine("\nKalkulator wielofunkcyjny:");
+            Console.WriteLine("1. Oblicz sumę");
+            Console.WriteLine("2. Oblicz różnicę");
+            Console.WriteLine("3. Oblicz iloczyn");
+            Console.WriteLine("4. Oblicz iloraz");
+            Console.WriteLine("5. Oblicz potęgę");
+            Console.WriteLine("6. Oblicz pierwiastek");
+            Console.WriteLine("7. Oblicz wartości funkcji trygonometrycznych");
+            Console.WriteLine("8. Wyjście");
+            Console.Write("Wybierz opcję: ");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    Console.Write("Podaj pierwszą liczbę: ");
+                    double add1 = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj drugą liczbę: ");
+                    double add2 = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine($"Suma: {add1 + add2}");
+                    break;
+                case 2:
+                    Console.Write("Podaj pierwszą liczbę: ");
+                    double sub1 = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj drugą liczbę: ");
+                    double sub2 = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine($"Różnica: {sub1 - sub2}");
+                    break;
+                case 3:
+                    Console.Write("Podaj pierwszą liczbę: ");
+                    double mul1 = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj drugą liczbę: ");
+                    double mul2 = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine($"Iloczyn: {mul1 * mul2}");
+                    break;
+                case 4:
+                    Console.Write("Podaj pierwszą liczbę: ");
+                    double div1 = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj drugą liczbę: ");
+                    double div2 = Convert.ToDouble(Console.ReadLine());
+                    if (div2 != 0)
+                    {
+                        Console.WriteLine($"Iloraz: {div1 / div2}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pamiętaj cholero, nie dziel przez zero.");
+                    }
+                    break;
+                case 5:
+                    Console.Write("Podaj podstawę: ");
+                    double baseNum = Convert.ToDouble(Console.ReadLine());
+                    Console.Write("Podaj wykładnik: ");
+                    double exponent = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine($"Potęga: {Math.Pow(baseNum, exponent)}");
+                    break;
+                case 6:
+                    Console.Write("Podaj liczbę: ");
+                    double num = Convert.ToDouble(Console.ReadLine());
+                    if (num >= 0)
+                    {
+                        Console.WriteLine($"Pierwiastek: {Math.Sqrt(num)}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nie można obliczyć pierwiastka z liczby ujemnej.");
+                    }
+                    break;
+                case 7:
+                    Console.Write("Podaj kąt w stopniach: ");
+                    double angle = Convert.ToDouble(Console.ReadLine());
+                    double radians = angle * (Math.PI / 180);
+                    Console.WriteLine($"sin({angle}) = {Math.Sin(radians)}");
+                    Console.WriteLine($"cos({angle}) = {Math.Cos(radians)}");
+                    Console.WriteLine($"tan({angle}) = {Math.Tan(radians)}");
+                    break;
+                case 8:
+                    Console.WriteLine("Koniec programu.");
+                    return;
+                default:
+                    Console.WriteLine("Nieprawidłowa opcja. Spróbuj ponownie.");
+                    break;
+            }
+        }
+    }
+}
