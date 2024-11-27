@@ -1,0 +1,57 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        double[] numbers = new double[10];
+
+        Console.WriteLine("10 liczb rzeczywistych:");
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.Write($"Liczba {i + 1}: ");
+            numbers[i] = Convert.ToDouble(Console.ReadLine());
+        }
+
+        Console.WriteLine("\nWyniki dla liczb:");
+
+        double sum = 0;
+        foreach (var num in numbers)
+        {
+            sum += num;
+        }
+        Console.WriteLine($"Suma elementów tablicy: {sum}");
+
+        double product = 1;
+        foreach (var num in numbers)
+        {
+            product *= num; //*=  -  product = product * num
+        }
+        Console.WriteLine($"Iloczyn elementów tablicy: {product}");
+
+        double average = sum / numbers.Length;
+        Console.WriteLine($"Średnia wartość: {average}");
+
+        double min = numbers[0];
+        foreach (var num in numbers)
+        {
+            if (num < min)
+            {
+                min = num;
+            }
+        }
+        Console.WriteLine($"Minimalna wartość: {min}");
+
+        double max = numbers[0];
+        foreach (var num in numbers)
+        {
+            if (num > max)
+            {
+                max = num;
+            }
+        }
+        Console.WriteLine($"Maksymalna wartość: {max}");
+
+        Console.WriteLine("Koniec programu.");
+    }
+}
