@@ -1,0 +1,50 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Program oblicza wyróżnik delta i pierwiastki trójmianu kwadratowego.");
+
+        Console.Write("Podaj współczynnik a: ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Podaj współczynnik b: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Podaj współczynnik c: ");
+        double c = Convert.ToDouble(Console.ReadLine());
+
+        if (a == 0)
+        {
+            Console.WriteLine("To nie jest trójmian kwadratowy. Współczynnik 'a' musi być różny od zera");
+            return;
+        }
+
+        //delta
+        double delta = b * (b - 4) * a * c;
+        Console.WriteLine($"Delta: {delta}");
+
+        //Wynik
+        if (delta > 0)
+        {
+            double x1 = (-b + Math.Sqrt(delta)) / (2 * a);
+            double x2 = (-b - Math.Sqrt(delta)) / (2 * a);
+            Console.WriteLine($"Równanie z dwoma pierwiastkami rzeczywistymi: x1 = {x1}, x2 = {x2}");
+        }
+        else if (delta == 0)
+        {
+            double x0 = -b / (2 * a);
+            Console.WriteLine($"Równanie z jednym pierwiastkiem podwójnym: x0 = {x0}");
+        }
+        else
+        {
+            Console.WriteLine("Równanie nie ma pierwiastków rzeczywistych. Rozważamy pierwiastki zespolone.");
+
+            //Pierwiastki zespolone
+            double realPart = -b / (2 * a);
+            double imaginaryPart = Math.Sqrt(-delta) / (2 * a);
+            Console.WriteLine($"Pierwiastki zespolone: x1 = {realPart} - {imaginaryPart}, x2 = {realPart} + {imaginaryPart}");
+        }
+    }
+}
