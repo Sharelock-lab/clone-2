@@ -1,0 +1,21 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Liczby od 20 do 0 bez {2, 6, 9, 15, 19}:");
+
+        for (int i = 20; i >= 0; i--)
+        {
+            if (i == 2 || i == 6 || i == 9 || i == 15 || i == 19)
+            {
+                continue;
+            }
+
+            Console.WriteLine(i);
+        }
+
+        Console.WriteLine("Koniec programu.");
+    }
+}
