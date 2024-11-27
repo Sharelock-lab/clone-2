@@ -1,0 +1,69 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        double[] numbers = new double[10];
+
+        Console.WriteLine("Wprowadź 10 liczb rzeczywistych:");
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.Write($"Liczba {i + 1}: ");
+            numbers[i] = Convert.ToDouble(Console.ReadLine());
+        }
+
+        int option;
+        do
+        {
+            Console.WriteLine("\nMenu zarządzania tablicą:");
+            Console.WriteLine("1. Wyświetl tablicę od pierwszego do ostatniego indeksu");
+            Console.WriteLine("2. Wyświetl tablicę od ostatniego do pierwszego indeksu");
+            Console.WriteLine("3. Wyświetl elementy o nieparzystych indeksach");
+            Console.WriteLine("4. Wyświetl elementy o parzystych indeksach");
+            Console.WriteLine("5. Wyjście");
+            Console.Write("Wybierz opcję: ");
+
+            option = Convert.ToInt32(Console.ReadLine());
+
+            if (option == 1)
+            {
+                Console.WriteLine("Tablica od pierwszego do ostatniego indeksu:");
+                for (int i = 0; i < numbers.Length; i++)
+                {
+                    Console.WriteLine(numbers[i]);
+                }
+            }
+            else if (option == 2)
+            {
+                Console.WriteLine("Tablica od ostatniego do pierwszego indeksu:");
+                for (int i = numbers.Length - 1; i >= 0; i--)
+                {
+                    Console.WriteLine(numbers[i]);
+                }
+            }
+            else if (option == 3)
+            {
+                Console.WriteLine("Elementy o nieparzystych indeksach:");
+                for (int i = 1; i < numbers.Length; i += 2)
+                {
+                    Console.WriteLine(numbers[i]);
+                }
+            }
+            else if (option == 4)
+            {
+                Console.WriteLine("Elementy o parzystych indeksach:");
+                for (int i = 0; i < numbers.Length; i += 2)
+                {
+                    Console.WriteLine(numbers[i]);
+                }
+            }
+            else if (option != 5)
+            {
+                Console.WriteLine("Nieprawidłowa opcja. Spróbuj ponownie.");
+            }
+        } while (option != 5);
+
+        Console.WriteLine("Koniec programu.");
+    }
+}
